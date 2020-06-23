@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class = 'row text-center'>
+    <div class='col'>
+        <h1>Welcome to Pricelytical!</h1>
+    </div>
+</div>
+
+<div class='row text-center' id='analysislist' >
+    Loading...
+</div>
+
+
+<script>
+const analysisElement = document.getElementById("analysislist")
+// analysisElement.innerHTML = 'Loading..'
+
+// var  el1="<h1> Hi 1</h1>"
+// var  el2="<h1> Hi 2</h1>"
+// var  el3="<h1> Hi 3</h1>"
+
+// analysisElement.innerHTML= el1 + el2 + el3
+
+const xhr = new XMLHttpRequest()
+const method = 'GET'
+const url = "/analysislist"
+const responseType = "json"
+
+function handlePress (analysis_id){
+    console.log(analysis_id)
+}
+
+function btn(analysis){
+    return "<button class = 'btn btn-primary btn-lg' onclick=handlePress(" + analysis.id+")>Show Analysis " + analysis.id+"</button>"
+
+}
+
+function formatAnalysisElem(analysis){
+    var formatedAnalysis = "<div class='col-md-5 col-md-offset-4 mx-auto border shadow p-3  bg-white rounded py-5 mb-4 analysis' id='analysis-" + analysis.id 
+    + "'><p>" + analysis.content + "</p><p>" + JSON.stringify(analysis.plotdata) + 
+        "</p><div class = 'btn-group'>"+ btn(analysis) +
+        "</div></div>"
+    return formatedAnalysis
+}
+
+xhr.responseType = responseType
+xhr.open(method, url)
+xhr.onload = function(){
+    
+    const serverResponse = xhr.response
+    const listedItems= serverResponse
+    var finalAnalysisStr=""
+    var i;
+    for (i=0;i<listedItems.length;i++){
+        var analysisobj = listedItems[i]
+        console.log(analysisobj)
+        var currentItem = formatAnalysisElem(analysisobj)
+        finalAnalysisStr += currentItem
+    }
+    analysisElement.innerHTML = finalAnalysisStr
+    // console.log(listedItems)
+}
+xhr.send()
+</script>
+{% endblock content %}
