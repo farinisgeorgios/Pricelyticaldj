@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     #internal
     'analysis',
+    'accounts',
+    'profiles',
+    
 ]
 
 MIDDLEWARE = [

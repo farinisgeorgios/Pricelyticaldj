@@ -1,5 +1,6 @@
 1. Users
     -> Register
+        ->configuration email
     -> Login
     -> Logout
     -> Profile

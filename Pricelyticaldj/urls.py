@@ -21,6 +21,8 @@ urlpatterns = [
     #html pages
     path('admin/', admin.site.urls),
     path('api/analysis/', include('analysis.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('profile/', include('profiles.urls')),
     path('',view_analysis_list),
 
     
