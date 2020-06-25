@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/analysis/', include('analysis.urls')),
     path('accounts/', include('accounts.urls')),
     path('profile/', include('profiles.urls')),
+    path('api/search/', include('search.urls')),
     path('',view_analysis_list),
 
     

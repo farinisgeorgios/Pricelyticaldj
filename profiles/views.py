@@ -13,8 +13,8 @@ import datetime
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def profile_view(request, username, *args, **kwargs):
-    qs=Profile.objects.filter(user__username=username)
+def profile_view(request, *args, **kwargs):
+    qs=Profile.objects.filter(user=request.user)
     if not qs.exists():
         return Response({},status=status.HTTP_404_NOT_FOUND)
     serializer = ProfileSerializer(qs,many=True)

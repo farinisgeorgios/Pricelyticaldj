@@ -50,4 +50,10 @@ def logout_view(request,*args,**kwargs):
         return Response(status=status.HTTP_200_OK)
     return Response({},status=status.HTTP_400_BAD_REQUEST)
 
-
+# Logincheck view
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def is_logedin_view(request,*args,**kwargs):
+    if request:
+        return Response(status=status.HTTP_200_OK)
+    return Response({},status=status.HTTP_400_BAD_REQUEST)

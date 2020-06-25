@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'analysis',
     'accounts',
     'profiles',
+    'search',
     
 ]
 

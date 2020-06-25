@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view, parser_classes, permission_class
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from .models import Analysis, HotelBased, PerimeterBased
+from profiles.models import Profile
 from .serializers import AnalysisSerializer, HotelBasedSerializer, PerimeterBasedSerializer
 
 
@@ -27,10 +28,10 @@ def view_analysis_list(request, *args, **kwargs):
 def view_hotelBased_analysis(request, analysis_id, *args, **kwargs):
     qs=HotelBased.objects.filter(analysis_details__id=analysis_id)
     if not qs.exists():
-        return Response({},status==status.HTTP_404_NOT_FOUND)
+        return Response({},status=status.HTTP_404_NOT_FOUND)
     serializer = HotelBasedSerializer(qs,many=True)
     data= serializer.data
-    return Response(serializer.data[0], status=status.HTTP_202_ACCEPTED)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
 
@@ -42,7 +43,7 @@ def view_perimeterBased_analysis(request, analysis_id, *args, **kwargs):
         return Response({},status=status.HTTP_404_NOT_FOUND)
     serializer = PerimeterBasedSerializer(qs,many=True)
     data= serializer.data
-    return Response(serializer[0].data, status=status.HTTP_202_ACCEPTED)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
 
@@ -51,6 +52,10 @@ def view_perimeterBased_analysis(request, analysis_id, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def create_Analysis_hotelbased(request, *args, **kwargs):
     serializer = HotelBasedSerializer(data=request.data, context={'request':request})
+    qs = Profile.objects.get(user=request.user)
+    if qs:
+        qs.hotelBased_searches = qs.hotelBased_searches - 1
+        qs.save()
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -63,6 +68,10 @@ def create_Analysis_hotelbased(request, *args, **kwargs):
 def create_Analysis_perimeterbased(request, *args, **kwargs):
     data = request.data
     serializer = PerimeterBasedSerializer(data=data, context={'request':request})
+    qs = Profile.objects.get(user=request.user)
+    if qs:
+        qs.perimeterBased_searches = qs.perimeterBased_searches - 1
+        qs.save()
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
