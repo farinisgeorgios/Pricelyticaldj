@@ -1,15 +1,14 @@
 from django.urls import path, include
-from .views import login_view, logout_view, register_view,is_logedin_view
+from .views import current_user, UserList, logout_view
+from rest_framework_jwt.views import obtain_jwt_token
 
 
 urlpatterns = [
 
-    #GET
-    path('login/', login_view),
+    #Need to include Authentication token in headers
+    path('login/', obtain_jwt_token),
+    path('current-user/', current_user),
+    path('signup/', UserList.as_view()),
     path('logout/', logout_view),
-    path('check-status/', is_logedin_view),
-
-    #POST
-    path('register/', register_view),
 
 ]
