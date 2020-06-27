@@ -1,51 +1,115 @@
 import React, {useState, useEffect} from 'react';
-import {Form ,Button,Container,Row, Col} from 'react-bootstrap'
+import {Form ,Button,Container,Row, Col, Alert} from 'react-bootstrap'
 import axios from 'axios'
-import UserForm from "../components/UserForm"
+import { Redirect } from "react-router-dom";
+const apiUrl = 'http://127.0.0.1:8000/';
+const appURL = 'http://127.0.0.1:3000/';
 
-export default function Login(){
+
+  
+export default function Login(props){
     const[username, setUsername] = React.useState("");
     const[password, setPassword] = React.useState("");
-    function handleSubmit(event){
-        event.preventDefault();
-        const url = "http://127.0.0.1:8000/"
-        const data = {username : username,
-                password : password}
-        const options = {
-            headers: {Authorization : localStorage.getItem('token')}}
-        axios.defaults.headers.common['Authorization'] = 
-            'Bearer ' + localStorage.getItem('jwtToken');
-        axios.post(url+ 'accounts/login',data).then((res) => {console.log(res);})
-        
-        
-        console.log("done",data)
-    }
-    return(
-        <Container fluid className="pt-xl-5 mx-auto" >
-            <Row > 
-            <Col md={{ span: 4, offset: 2 }} className="justify-content-md-center shadow p-xl-5 mx-auto">
-            <Row><h2 className="text-center">Please Log In</h2></Row>
-            <Form onSubmit={handleSubmit}>
-            
-            <Form.Group controlId="formBasicUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control onChange={e=> setUsername(e.target.value)} type="username" placeholder="Enter username" />
-                <Form.Text className="text-muted">
-                We'll never share your username with anyone else.
-                </Form.Text>
-            </Form.Group>
+    const storedJwt = localStorage.getItem('token');
+    const [jwt, setJwt] = useState(storedJwt || null);
+    const [redirect, setRedirect] = useState({  redirect: false,
+                                                path: "",
+                                                msg: ""
+                                            });
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control onChange={e=> setPassword(e.target.value)} type="password" placeholder="Password" />
-            </Form.Group>
-            <Button variant="primary" type="submit" block>
-                Log In
-            </Button>
-            </Form>
+    
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data ={username : username,
+                    password : password}
+        
+        // fetch(apiUrl + 'accounts/login/', {
+        //     method: 'POST',
+        //     headers:{
+        //         Accept: 'application/json',
+        //                 'Content-Type': 'application/json',
+                        
+        //     },
+        //     body: JSON.stringify({username: username, password: password})
+        // })
+        //     .then(res => res.json());
+        const options = {
+            headers:{
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+            }    
+        } 
+
+        axios.post(apiUrl + 'accounts/login/', data, options).then(response => {
+            window.localStorage.setItem('token', response.data.token);
+            setJwt(response.data.token)
+            setRedirect({
+                redirect: true,
+                path : appURL + "about/",
+                msg : "Loged in successfully!"
+            })
+            console.log("done",response.data,jwt,redirect);
+        }).catch((error) =>{
+            setRedirect({
+                redirect: false,
+                path : "",
+                msg : "Wrong Username or Password. Pleasy try again!"
+            })
+            console.log("Have an error");
+                
+        });
+    }
+
+
+    // REDIRECT HERE *********************************************
+    if (redirect.redirect) {
+        return <Redirect to= '/'
+        />
+        
+    }else{
+    
+    return(
+        <Container fluid className="pt-xl-5 mx-auto rounded" >
+            <Row > 
+            <Col md={{ span: 4, offset: 5 }} className="justify-content-md-center shadow mx-auto pt-xl-4 rounded">
+            <Row>
+                <Col className="justify-content-md-center ">
+                <h2 className="text-center">Please Log In</h2>
+                </Col>
+            </Row>
+            <Row>
+                <Col className='p-xl-4'>
+                    {redirect.msg && redirect.redirect===false && <Alert variant='danger' >{redirect.msg}</Alert>}
+                    <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="formBasicUsername">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control onChange={e=> setUsername(e.target.value)} value={username} type="username" placeholder="Enter username" />
+                        <Form.Text className="text-muted">
+                            We'll never share your username with anyone else.
+                        </Form.Text>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control onChange={e=> setPassword(e.target.value)} value={password} type="password" placeholder="Password" />
+                    </Form.Group>
+                    
+                    <Button variant="primary" type="submit" block>
+                        Log In
+                    </Button>
+                    <p class="text-secondary">
+                        Don't have an account?{' '}
+                        <a href="/signup" class="text-primary">Sign Up</a> 
+                    </p>
+                    
+                    </Form>
+            </Col>
+            </Row>
             </Col>
             </Row>
         </Container>
     
     ) 
+    }
 }
