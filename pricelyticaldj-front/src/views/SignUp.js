@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Form ,Button,InputGroup, Col, Row, Container, Alert} from 'react-bootstrap'
 import axios from 'axios'
 import { Redirect } from "react-router-dom";
+
 const apiUrl = 'http://127.0.0.1:8000/';
 
 
@@ -48,7 +49,7 @@ export default function SignUp(){
                 }    
             } 
             axios.post(apiUrl + 'accounts/signup/', data, options).then(response => {
-                window.localStorage.setItem('token', response.data.token);
+                
                 setRedirect({
                     redirect: true,
                     path : "/login",
@@ -162,7 +163,7 @@ export default function SignUp(){
                     <Form.Row>
                         <Form.Group as={Col} md="6" >
                             <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control onChange={e=> setPass2(e.target.value)} value={password2} type="password" placeholder="Password" isValid={password1!=="" && password2==password1} required/>
+                            <Form.Control onChange={e=> setPass2(e.target.value)} value={password2} type="password" placeholder="Password" isValid={password1 !== "" && password2===password1} required/>
                             {!passMatch && <p className='text-danger'><small>Please insert the correct password</small></p>}
                             
                         </Form.Group>

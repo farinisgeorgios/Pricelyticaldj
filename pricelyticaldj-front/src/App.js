@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios'
 import {Container} from 'react-bootstrap'
 import './App.css';
 import About from './views/About'
@@ -7,27 +8,73 @@ import Login from './views/Login'
 import NavBar from './components/NavBar'
 import MyFooter from './components/MyFooter'
 import SignUp from './views/SignUp'
+import Pricing from './views/Pricing'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link} from "react-router-dom"
-
+  Link,
+Redirect} from "react-router-dom"
+const apiUrl = 'http://127.0.0.1:8000/';
 
 function App() {
+  const [logedin, setLogedin] = useState(false)
+  const [user, setUser] = useState({
+                                    id: "",
+                                    username : "",
+                                    email: "",
+                                    first_name: "",
+                                    last_name: "",
+                                  })
+
+  const LogSet = (bool) => {
+    setLogedin(bool)
+  }
+
+  useEffect(() => {
+  const options = {
+    headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.getItem('token')}`
+    }    
+  } 
+
+  axios.get(apiUrl + 'accounts/current-user/', options).then(response => {
+    setUser({
+      id: response.data.id,
+      username : response.data.username,
+      first_name: response.data.first_name,
+      last_name: response.data.last_name,
+      email: response.data.email,
+    })
+    setLogedin(true)
+    console.log("done",response.data,user);
+  }).catch((error) =>{
+    setLogedin(false)
+    
+    console.log("Have an error");
+        
+      });
+  
+},[logedin])
+
+
   return (
     
       <div className='relative'>
       <Router>
-      <NavBar/>
+      <NavBar setloged={LogSet} logedin={logedin} user={user.username}/>
         <Switch>
-          <Route exact path="/"><Home/></Route>
-          <Route path="/about"><About/></Route>
-          <Route path="/pricing">
-            <h1>
-              Pricing Page
-            </h1>
-          </Route>
+          <Route exact path="/" render={() => (logedin ?  (<Home />) : 
+                                                              (<Home />))}/>
+                                                              {/* (<Redirect to="/login"/>) */}
+          <Route path="/about" render={() => (logedin ?  (<About />) : 
+                                                              (<About />))}/>
+          <Route path="/pricing" render={() => (logedin ?  (<Pricing />) : 
+                                                              (<Pricing />))}/>
+            
+          
           <Route path="/profile">
             <h1>
               Profile Page
@@ -38,15 +85,8 @@ function App() {
               Analysis List Page
             </h1>
           </Route>
-          <Route path="/login"><Login/></Route>
-          <Route path="/logout">
-            <h1>
-              Logout Page
-            </h1>
-          </Route>
-          <Route path="/signup">
-            <SignUp/>
-          </Route>
+          <Route path="/login"><Login setloged={LogSet}/></Route>
+          <Route path="/signup"><SignUp/></Route>
         </Switch>
         <div className="pt-xl-5 relative-bottom">
           <div className='shadow'>
@@ -57,6 +97,7 @@ function App() {
       </Router>
       
       </div>
+ 
   );
 }
 

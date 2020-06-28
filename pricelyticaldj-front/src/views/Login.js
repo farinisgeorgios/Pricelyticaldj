@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Form ,Button,Container,Row, Col, Alert} from 'react-bootstrap'
 import axios from 'axios'
 import { Redirect } from "react-router-dom";
 const apiUrl = 'http://127.0.0.1:8000/';
-const appURL = 'http://127.0.0.1:3000/';
+
 
 
   
@@ -42,13 +42,14 @@ export default function Login(props){
         } 
 
         axios.post(apiUrl + 'accounts/login/', data, options).then(response => {
-            window.localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.data.token);
             setJwt(response.data.token)
             setRedirect({
                 redirect: true,
-                path : appURL + "about/",
+                path : "/",
                 msg : "Loged in successfully!"
             })
+            props.setloged(true)
             console.log("done",response.data,jwt,redirect);
         }).catch((error) =>{
             setRedirect({
@@ -64,7 +65,7 @@ export default function Login(props){
 
     // REDIRECT HERE *********************************************
     if (redirect.redirect) {
-        return <Redirect to= '/'
+        return <Redirect to= {redirect.path}
         />
         
     }else{

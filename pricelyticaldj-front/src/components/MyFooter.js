@@ -1,7 +1,7 @@
 import Footer from 'rc-footer';
 import React from 'react'
 import 'rc-footer/assets/index.css'; // import 'rc-footer/asssets/index.less';
-import { render } from 'react-dom';
+
 
 
 export default function MyFooter(){
@@ -107,7 +107,7 @@ export default function MyFooter(){
             },
             
           ]}
-          bottom="Made with ❤️ by AFX"
+          bottom="Copyright © 2020 Egrowth. All Rights Reserved."
         />
     )
 }
