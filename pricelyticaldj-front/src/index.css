@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.hjumbotron {
+  background-image: url("/homejumb.jpg")  ;
+  min-height: 500px;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+.navbar {
+  min-height: 80px;
+}
+
+.jumbotron {
+  background-image: url("/aboutus.jpg");
+  background-size: cover;
+}
+
+.nav-link {color:#fff; text-decoration: none;}

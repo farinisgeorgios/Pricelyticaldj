@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Form ,Button,Container,Row, Col, Alert} from 'react-bootstrap'
 import axios from 'axios'
 import { Redirect } from "react-router-dom";
-const apiUrl = 'http://127.0.0.1:8000/';
+import {SERVER_ADDRESS} from "../constants/config"
 
 
 
@@ -41,7 +41,7 @@ export default function Login(props){
             }    
         } 
 
-        axios.post(apiUrl + 'accounts/login/', data, options).then(response => {
+        axios.post(SERVER_ADDRESS + 'accounts/login/', data, options).then(response => {
             localStorage.setItem('token', response.data.token);
             setJwt(response.data.token)
             setRedirect({

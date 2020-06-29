@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios'
-import { Navbar,Nav,NavDropdown } from 'react-bootstrap';
+import { Navbar,Nav,NavDropdown, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom'
 
-const apiUrl = 'http://127.0.0.1:8000/';
+import {SERVER_ADDRESS} from "../constants/config"
 
 
 
@@ -16,7 +17,7 @@ export default function NavBar(props){
                     Authorization: `JWT ${localStorage.getItem('token')}`
             }    
           } 
-          axios.get(apiUrl + 'accounts/logout/', options).then(response => {
+          axios.get(SERVER_ADDRESS + 'accounts/logout/', options).then(response => {
             localStorage.removeItem('token')
             props.setloged(false)
             console.log("logedin :",props.logedin);
@@ -41,18 +42,33 @@ export default function NavBar(props){
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
+            <div className=" ml-auto">
+                <Link to='/create-analysis'>
+                <Button className= "btn-dark btn-outline-light " type="button" onClick>Start Analysis</Button>
+                </Link>
+            </div>
             <Nav className='ml-auto'>
-            <Nav.Link href="/about">About</Nav.Link>
-            <Nav.Link href="/pricing">Pricing</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
-            {props.logedin && <NavDropdown alignRight className='text-primary' title={props.user.toUpperCase()} id="dropdown-menu-align-right">
+            <Nav.Link href="/about">
+                <a>About</a>
+            </Nav.Link>
+            <Nav.Link href="/pricing">
+                <a>Pricing</a>
+            </Nav.Link>
+            <Nav.Link href="/contact">
+                <a>Contact</a>
+            </Nav.Link>
+            {props.logedin && <NavDropdown alignRight className='a text-primary' title={props.user.toUpperCase()} id="dropdown-menu-align-right">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/analysis/list">Analysis Repository</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={logoutUser} className='text-danger'>Log Out</NavDropdown.Item>
             </NavDropdown>}
-            {!props.logedin   && <Nav.Link href="/login">Log In</Nav.Link>}
-            {!props.logedin   && <Nav.Link href="/signup"> Sign Up</Nav.Link>}
+            {!props.logedin   && <Nav.Link href="/login">
+                                    <a>Log In</a>
+                                </Nav.Link>}
+            {!props.logedin   && <Nav.Link href="/signup">
+                                   <a>Sign Up</a> 
+                                </Nav.Link>}
             </Nav>
         </Navbar.Collapse>
         </Navbar>

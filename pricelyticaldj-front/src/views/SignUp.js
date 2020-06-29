@@ -3,7 +3,7 @@ import {Form ,Button,InputGroup, Col, Row, Container, Alert} from 'react-bootstr
 import axios from 'axios'
 import { Redirect } from "react-router-dom";
 
-const apiUrl = 'http://127.0.0.1:8000/';
+import {SERVER_ADDRESS} from "../constants/config"
 
 
 export default function SignUp(){
@@ -48,7 +48,7 @@ export default function SignUp(){
                         'Content-Type': 'application/json',
                 }    
             } 
-            axios.post(apiUrl + 'accounts/signup/', data, options).then(response => {
+            axios.post(SERVER_ADDRESS + 'accounts/signup/', data, options).then(response => {
                 
                 setRedirect({
                     redirect: true,
