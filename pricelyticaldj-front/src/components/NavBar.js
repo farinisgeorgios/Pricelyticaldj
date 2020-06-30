@@ -42,8 +42,8 @@ export default function NavBar(props){
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-            <div className=" ml-auto">
-                <Link to='/create-analysis'>
+            <div className="mx-auto">
+                <Link to='/analysis/create'>
                 <Button className= "btn-dark btn-outline-light " type="button" onClick>Start Analysis</Button>
                 </Link>
             </div>

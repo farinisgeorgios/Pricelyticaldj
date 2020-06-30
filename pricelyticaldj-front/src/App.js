@@ -9,6 +9,7 @@ import MyFooter from './components/MyFooter'
 import SignUp from './views/SignUp'
 import Pricing from './views/Pricing'
 import Analysis_list from './views/Analysis_list'
+import Create from './views/Create_analysis'
 import {SERVER_ADDRESS} from "./constants/config"
 import {
   BrowserRouter as Router,
@@ -16,7 +17,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom"
-const apiUrl = 'http://127.0.0.1:8000/';
+
 
 
 function App() {
@@ -75,7 +76,7 @@ function App() {
           <Route path="/login"><Login setloged={LogSet}/></Route>
           <Route path="/signup"><SignUp/></Route>
           <Route path="/analysis/list" render={() => logedin ? (<Analysis_list/>) : (<Redirect to='/login'/>)}/>
-            
+          <Route path="/analysis/create"><Create/></Route>
           
           <Route path="/profile">
             <h1>

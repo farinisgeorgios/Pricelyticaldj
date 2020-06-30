@@ -8,7 +8,7 @@ class AnalysisSerializer(serializers.ModelSerializer):
     # user = AnalysisSerializerIn()
     class Meta:
         model = Analysis
-        fields = ['id','date_created','rooms','adults','children','checkin_date','checkout_date','hotelBased','perimeterBased']
+        fields = ['id','name','date_created','rooms','adults','children','checkin_date','checkout_date','hotelBased','perimeterBased']
 
 
 

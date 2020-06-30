@@ -5,7 +5,7 @@ from .models import Analysis, HotelBased, PerimeterBased
 
 class AnalysisAdmin(admin.ModelAdmin):
     list_display = ['__str__','user']
-    search_fields = ['id','user__username','user__email','date_created','rooms','adults','children','checkin_date','checkout_date']
+    search_fields = ['id','user__username','user__email', 'name','date_created','rooms','adults','children','checkin_date','checkout_date']
     class Meta:
         model = Analysis
 

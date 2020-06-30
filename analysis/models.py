@@ -7,6 +7,7 @@ User=settings.AUTH_USER_MODEL
 
 class Analysis(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=220)
     date_created = models.DateTimeField(auto_now_add=True)
     rooms = models.IntegerField(default=0)
     adults = models.IntegerField(default=0)
