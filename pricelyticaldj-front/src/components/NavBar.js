@@ -14,11 +14,13 @@ export default function NavBar(props){
             headers:{
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    Authorization: `JWT ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }    
           } 
           axios.get(SERVER_ADDRESS + 'accounts/logout/', options).then(response => {
-            localStorage.removeItem('token')
+            localStorage.removeItem('refresh_token')
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('user')
             props.setloged(false)
             console.log("logedin :",props.logedin);
           }).catch((error) =>{
@@ -44,30 +46,30 @@ export default function NavBar(props){
         <Navbar.Collapse id="responsive-navbar-nav">
             <div className="mx-auto">
                 <Link to='/analysis/create'>
-                <Button className= "btn-dark btn-outline-light " type="button" onClick>Start Analysis</Button>
+                <Button className= "btn-dark btn-outline-light " type="button">Start Analysis</Button>
                 </Link>
             </div>
             <Nav className='ml-auto'>
             <Nav.Link href="/about">
-                <a>About</a>
+                About
             </Nav.Link>
             <Nav.Link href="/pricing">
-                <a>Pricing</a>
+                Pricing
             </Nav.Link>
             <Nav.Link href="/contact">
-                <a>Contact</a>
+                Contact
             </Nav.Link>
-            {props.logedin && <NavDropdown alignRight className='a text-primary' title={props.user.toUpperCase()} id="dropdown-menu-align-right">
+            {localStorage.getItem('access_token') !== null && <NavDropdown alignRight className='a text-primary' title={props.user.toUpperCase()} id="dropdown-menu-align-right">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/analysis/list">Analysis Repository</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={logoutUser} className='text-danger'>Log Out</NavDropdown.Item>
             </NavDropdown>}
-            {!props.logedin   && <Nav.Link href="/login">
-                                    <a>Log In</a>
+            {localStorage.getItem('access_token')===null   && <Nav.Link href="/login">
+                                    Log In
                                 </Nav.Link>}
-            {!props.logedin   && <Nav.Link href="/signup">
-                                   <a>Sign Up</a> 
+            {localStorage.getItem('access_token')===null   && <Nav.Link href="/signup">
+                                   Sign Up
                                 </Nav.Link>}
             </Nav>
         </Navbar.Collapse>

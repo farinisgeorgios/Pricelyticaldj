@@ -20,7 +20,7 @@ code {
 }
 
 .navbar {
-  min-height: 80px;
+  min-height: 60px;
 }
 
 .jumbotron {
@@ -29,3 +29,11 @@ code {
 }
 
 .nav-link {color:#fff; text-decoration: none;}
+
+
+.visible {
+  visibility: visible;
+}
+.invisible {
+  visibility: hidden;
+}

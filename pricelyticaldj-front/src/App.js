@@ -34,12 +34,34 @@ function App() {
     setLogedin(bool)
   }
 
+
+  useEffect(()=>{
+    const postdata = {
+      refresh : localStorage.getItem('refresh_token')
+    }
+    const options = {
+      headers:{
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      }    
+    } 
+    
+    axios.post(SERVER_ADDRESS + 'accounts/refresh/', postdata, options).then(response => {
+            localStorage.setItem('access_token', response.data.access);
+            console.log("New Token: ",response.data.access);
+          }).catch((error) =>{
+            console.log("Could not update token");
+                
+          });
+  },[])
+
   useEffect(  () =>  {
     const options = {
       headers:{
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              Authorization: `JWT ${localStorage.getItem('token')}`
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
       }    
     } 
     
@@ -51,6 +73,7 @@ function App() {
             last_name: response.data.last_name,
             email: response.data.email,
           })
+          localStorage.setItem('user', response.data.username)
           setLogedin(true)
           console.log("done",response.data,user);
           }).catch((error) =>{
@@ -62,6 +85,7 @@ function App() {
     
     
 },[logedin])
+
 
 
   return (
@@ -76,8 +100,9 @@ function App() {
           <Route path="/login"><Login setloged={LogSet}/></Route>
           <Route path="/signup"><SignUp/></Route>
           <Route path="/analysis/list" render={() => logedin ? (<Analysis_list/>) : (<Redirect to='/login'/>)}/>
-          <Route path="/analysis/create"><Create/></Route>
-          
+          <Route path="/analysis/create" render={() => logedin ? (<Create/>) : (<Redirect to='/login'/>)}/>
+          {/* <Route path="/analysis/create" render={() => logedin ? (<Create/>) : (<Create/>)}/> */}
+          <Route path="/analysis/report/:id"> analysis report</Route>
           <Route path="/profile">
             <h1>
               Profile Page

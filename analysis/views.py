@@ -14,7 +14,7 @@ from .serializers import AnalysisSerializer, HotelBasedSerializer, PerimeterBase
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def view_analysis_list(request, *args, **kwargs):
-    qs=Analysis.objects.filter(user=request.user)
+    qs=Analysis.objects.filter(user=request.user).order_by('-id')
     if not qs.exists():
         return Response({},status=status.HTTP_404_NOT_FOUND)
     serializer = AnalysisSerializer(qs,many=True)
@@ -51,14 +51,33 @@ def view_perimeterBased_analysis(request, analysis_id, *args, **kwargs):
 @parser_classes([JSONParser])
 @permission_classes([IsAuthenticated])
 def create_Analysis_hotelbased(request, *args, **kwargs):
-    serializer = HotelBasedSerializer(data=request.data, context={'request':request})
+    data=request.data
+    data.update({
+        'plotdata' : [
+        {
+            "title" : "Average Price",
+            "Text"  : "The average price for a perimeter of the hotel.",
+            "x"     : [3,4,5,6,4,5,8,7],
+            "y"     : [4,5,8,7,6,8,4,9],
+        },
+        {
+            "title" : "Price per day",
+            "Text"  : "Price per day for a perimeter of the hotel",
+            "x"     : [5,5,6,9,456,8451,5498,351],
+            "y"     : [354,68,2318,384,684,446,648,684],
+
+        }
+    ]})
+
+    
     qs = Profile.objects.get(user=request.user)
-    if qs:
+    if qs and qs.hotelBased_searches > 0:
         qs.hotelBased_searches = qs.hotelBased_searches - 1
         qs.save()
-    if serializer.is_valid(raise_exception=True):
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = HotelBasedSerializer(data=data, context={'request':request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response({},status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -67,14 +86,31 @@ def create_Analysis_hotelbased(request, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def create_Analysis_perimeterbased(request, *args, **kwargs):
     data = request.data
-    serializer = PerimeterBasedSerializer(data=data, context={'request':request})
+    data.update({
+        'plotdata' : [
+        {
+            "title" : "Average Price",
+            "Text"  : "The average price for a perimeter of the hotel.",
+            "x"     : [3,4,5,6,4,5,8,7],
+            "y"     : [4,5,8,7,6,8,4,9],
+        },
+        {
+            "title" : "Price per day",
+            "Text"  : "Price per day for a perimeter of the hotel",
+            "x"     : [5,5,6,9,456,8451,5498,351],
+            "y"     : [354,68,2318,384,684,446,648,684],
+
+        }
+    ]})
+    
     qs = Profile.objects.get(user=request.user)
-    if qs:
+    if qs and qs.perimeterBased_searches > 0:
         qs.perimeterBased_searches = qs.perimeterBased_searches - 1
         qs.save()
-    if serializer.is_valid(raise_exception=True):
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = PerimeterBasedSerializer(data=data, context={'request':request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response({},status=status.HTTP_400_BAD_REQUEST)
 
 

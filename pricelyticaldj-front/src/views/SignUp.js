@@ -98,6 +98,7 @@ export default function SignUp(){
                                 placeholder="Username"
                                 aria-describedby="inputGroupPrepend"
                                 required
+                                className="rounded"
                             />
                             <Form.Control.Feedback type="invalid">
                                 Please choose a username.
@@ -141,6 +142,7 @@ export default function SignUp(){
                                 placeholder="user@example.com"
                                 aria-describedby="inputGroupPrepend"
                                 required
+                                className="rounded"
                                 />
                                 <Form.Control.Feedback type="invalid">
                                 Please provide a valid city.

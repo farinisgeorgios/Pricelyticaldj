@@ -42,15 +42,27 @@ export default function Login(props){
         } 
 
         axios.post(SERVER_ADDRESS + 'accounts/login/', data, options).then(response => {
-            localStorage.setItem('token', response.data.token);
-            setJwt(response.data.token)
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+            setJwt(response.data.access)
             setRedirect({
                 redirect: true,
                 path : "/",
                 msg : "Loged in successfully!"
             })
             props.setloged(true)
-            console.log("done",response.data,jwt,redirect);
+
+            const options = {
+                headers:{
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                }    
+              } 
+              axios.get(SERVER_ADDRESS + 'accounts/current-user/', options).then(response => {
+                    localStorage.setItem('user', response.data.username)}).catch((error) =>{});
+            console.log("done",response.data.access);
+            
         }).catch((error) =>{
             setRedirect({
                 redirect: false,

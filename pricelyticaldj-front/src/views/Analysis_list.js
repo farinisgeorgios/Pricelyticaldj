@@ -13,7 +13,7 @@ export default function Analysis_list(){
             headers:{
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    Authorization: `JWT ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }    
         }
         
@@ -61,7 +61,7 @@ export default function Analysis_list(){
                                         <Card.Text >
                                             An analysis between {item.checkin_date} and {item.checkout_date} for {item.rooms} rooms, {item.adults} adults, {item.children} child(-ren).
                                         </Card.Text>
-                                        <a href={'/analysis/'+item.id} className="btn btn-dark btn-outline-light btn-sm btn-block">
+                                        <a href={'/analysis/report/'+item.id} className="btn btn-dark btn-outline-light btn-sm btn-block">
                                             View Analysis
                                         </a>
                                     </Card.Body>
