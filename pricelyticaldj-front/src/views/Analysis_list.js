@@ -6,6 +6,7 @@ import axios from 'axios'
 import {FaHotel,FaBroadcastTower} from 'react-icons/fa'
 import { IconContext } from "react-icons";
 
+
 export default function Analysis_list(){
     const [list, setList] = useState([])
     useEffect(() => {

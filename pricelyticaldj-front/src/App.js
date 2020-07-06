@@ -4,6 +4,7 @@ import './App.css';
 import About from './views/About'
 import Home from './views/Home'
 import Login from './views/Login'
+import Profile from './views/Profile'
 import NavBar from './components/NavBar'
 import MyFooter from './components/MyFooter'
 import SignUp from './views/SignUp'
@@ -101,13 +102,10 @@ function App() {
           <Route path="/signup"><SignUp/></Route>
           <Route path="/analysis/list" render={() => logedin ? (<Analysis_list/>) : (<Redirect to='/login'/>)}/>
           <Route path="/analysis/create" render={() => logedin ? (<Create/>) : (<Redirect to='/login'/>)}/>
+          <Route path="/profile" render={() => logedin ? (<Profile user={user} />) : (<Redirect to='/login'/>)}/>
           {/* <Route path="/analysis/create" render={() => logedin ? (<Create/>) : (<Create/>)}/> */}
           <Route path="/analysis/report/:id"> analysis report</Route>
-          <Route path="/profile">
-            <h1>
-              Profile Page
-            </h1>
-          </Route>
+          
           
           
         </Switch>
