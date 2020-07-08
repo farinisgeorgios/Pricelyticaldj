@@ -23,7 +23,7 @@ code {
   min-height: 60px;
 }
 
-.jumbotron {
+.aboutjumbotron {
   background-image: url("/aboutus.jpg");
   background-size: cover;
 }

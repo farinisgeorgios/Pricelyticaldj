@@ -10,6 +10,7 @@ import MyFooter from './components/MyFooter'
 import SignUp from './views/SignUp'
 import Pricing from './views/Pricing'
 import Analysis_list from './views/Analysis_list'
+import Contact from './views/Contact'
 import Create from './views/Create_analysis'
 import {SERVER_ADDRESS} from "./constants/config"
 import {
@@ -98,6 +99,7 @@ function App() {
           <Route exact path="/"><Home /></Route>
           <Route path="/about" ><About /></Route>
           <Route path="/pricing" ><Pricing /></Route>
+          <Route path="/contact"><Contact/></Route>
           <Route path="/login"><Login setloged={LogSet}/></Route>
           <Route path="/signup"><SignUp/></Route>
           <Route path="/analysis/list" render={() => logedin ? (<Analysis_list/>) : (<Redirect to='/login'/>)}/>
@@ -109,7 +111,7 @@ function App() {
           
           
         </Switch>
-        <div className="pt-xl-5 relative-bottom">
+        <div className="relative-bottom">
           <div className='shadow'>
             <MyFooter/>
           </div>

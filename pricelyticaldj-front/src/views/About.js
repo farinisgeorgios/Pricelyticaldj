@@ -7,7 +7,7 @@ import {Form ,Button,InputGroup, Col, Row, Container, Alert, Image} from 'react-
 export default function About(){
     return(
         <div>
-            <div className="jumbotron jumbotron-fluid">
+            <div className="aboutjumbotron jumbotron-fluid">
             <div className="container">
                 <h1 className="display-1 text-white">About Us</h1>
                 {/* <p className="lead text-white">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> */}

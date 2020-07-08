@@ -162,3 +162,10 @@ CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
     'http://localhost:3000',
 )
+
+
+# Email settings
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'f0258ca9a6827b'
+EMAIL_HOST_PASSWORD = '69a2d6de40275b'
+EMAIL_PORT = '2525'

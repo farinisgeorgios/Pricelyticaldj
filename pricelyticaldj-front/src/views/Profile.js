@@ -53,7 +53,7 @@ export default function Profile(props){
                     </Col>
                     <Col>
                         <div className="col-md-4 ml-auto p-xl-2">
-                            <Button href='/analysis/list' className='btn-primary'><FaListUl/> Analysis list</Button>
+                            <Button href='/analysis/list' className='btn-primary'><FaListUl/>{'  '}Analysis List</Button>
                         </div>
                         
                     </Col>
@@ -115,7 +115,12 @@ export default function Profile(props){
                         </Col>
                         
                         <Col className='col-md-3'>
-                            <Form.Label><FaMoneyCheck/> Last purchase on {resp.came ? String(resp.data[0].last_hotelBased_purchase.slice(0,10)) : ""} </Form.Label>
+                            <Form.Label>
+                                <IconContext.Provider value={{ size:'1em' ,color: "#0069D9", className: "global-class-name" }}>
+                                    <FaMoneyCheck/> 
+                                </IconContext.Provider> 
+                                {'  '}Last purchase on {resp.came ? String(resp.data[0].last_hotelBased_purchase.slice(0,10)) : ""} 
+                                </Form.Label>
                         </Col>
                     </Row>
                     <Row className='pt-xl-3'>
@@ -126,7 +131,12 @@ export default function Profile(props){
                             <Form.Control placeholder={resp.came ? String(resp.data[0].perimeterBased_searches) : "0"} readOnly/>
                         </Col>
                         <Col className='col-md-3'>
-                            <Form.Label><FaMoneyCheck/> Last purchase on {resp.came ? String(resp.data[0].last_perimeterBased_purchase.slice(0,10)) : ""} </Form.Label>
+                            <Form.Label>
+                                <IconContext.Provider value={{ size:'1em' ,color: "#0069D9", className: "global-class-name" }}>
+                                    <FaMoneyCheck/> 
+                                </IconContext.Provider>
+                            {'  '}Last purchase on {resp.came ? String(resp.data[0].last_perimeterBased_purchase.slice(0,10)) : ""} 
+                            </Form.Label>
                         </Col>
                     </Row>
                     

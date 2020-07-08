@@ -72,7 +72,7 @@ export default function MyFooter(){
                 {
                   icon: (
                     <SocialMediaIconsReact borderColor="rgba(0,0,0,0.25)" borderWidth="0" borderStyle="solid" icon="mail" iconColor="rgba(246,246,246,1)" backgroundColor="rgba(0,157,170,1)" iconSize="5" roundness="50%" url="<info@egrowth.gr>" size="18" />                  ),
-                  title: 'info@egrowth.gr',
+                  title: <a href = {"mailto:" + "info@egrowth.gr"}>info@egrowth.gr</a>,
                   description: 'Email',
                 },
               ],

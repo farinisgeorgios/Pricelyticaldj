@@ -14,7 +14,7 @@ from operator import or_
 
 @api_view(['POST'])
 @parser_classes([JSONParser])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def hotelsearch_view(request, *args, **kwargs):
     search_data = request.data['searchstring'].split(',')   #name, locality, country
     search_data.append(request.data['searchstring'])
