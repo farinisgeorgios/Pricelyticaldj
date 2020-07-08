@@ -53,6 +53,7 @@ function App() {
             localStorage.setItem('access_token', response.data.access);
             console.log("New Token: ",response.data.access);
           }).catch((error) =>{
+            localStorage.removeItem('access_token');
             console.log("Could not update token");
                 
           });
