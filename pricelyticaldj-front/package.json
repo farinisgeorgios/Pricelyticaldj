@@ -21,6 +21,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-search-box": "^2.0.2",
+    "react-vis": "^1.11.7",
     "reactstrap": "^8.5.1",
     "social-media-icons-react": "^1.0.10",
     "typescript": "^3.9.5"

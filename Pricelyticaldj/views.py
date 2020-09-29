@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 def send_mail_view(request,*args,**kwargs):
     mail_data = request.data  #name, locality, country
     send_mail(
-    '(' + mail_data['fullname']+') ' + mail_data['subject'],
+    "(" + mail_data['fullname']+") " + mail_data['subject'],
     mail_data['message'],
     mail_data['from_mail'],
     ['gefofar@gmail.com'],

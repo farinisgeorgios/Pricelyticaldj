@@ -76,7 +76,7 @@ export default function SignUp(){
     }else{
   
     return (
-        <Container fluid className="pt-xl-5" >
+        <Container fluid className="pt-xl-5 pb-xl-5" >
             <Row > 
             <Col md={{ span: 5, offset: 2 }} className="justify-content-md-center shadow mx-auto pt-xl-4 rounded">
             <Row>

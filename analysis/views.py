@@ -55,18 +55,33 @@ def create_Analysis_hotelbased(request, *args, **kwargs):
     data.update({
         'plotdata' : [
         {
-            "title" : "Average Price",
-            "Text"  : "The average price for a perimeter of the hotel.",
-            "x"     : [3,4,5,6,4,5,8,7],
-            "y"     : [4,5,8,7,6,8,4,9],
+            "title" : "Average Price for every search engine.",
+            "Text"  : "The average price for the given hotels, in each search engine.",
+            "data"     : [{'x':'Booking.com', 'y':128}, {'x':'Agoda.com', 'y':130} , {'x':'AirBnB', 'y':120}, {'x':'Trip.com', 'y':150}, {'x':'Expedia', 'y':140}],
         },
         {
-            "title" : "Price per day",
-            "Text"  : "Price per day for a perimeter of the hotel",
-            "x"     : [5,5,6,9,456,8451,5498,351],
-            "y"     : [354,68,2318,384,684,446,648,684],
-
-        }
+            "title" : "Maximum and Minimum price.",
+            "Text"  : "Maximum and Minimum price of every search engine.",
+            "x"     : ['Booking.com', 'Agoda.com', 'AirBnB', 'Trip.com', 'Expedia'],
+            "y1"     : [162, 160, 140, 200, 260],
+            "y2"     : [110, 100, 100, 100, 150],
+        },
+        {
+            "title" : "Average hotel price",
+            "Text"  : "Average hotel price for all of the search engines.",
+            "x"     : ['Hotel 1', 'Hotel 2', 'Hotel 3', 'Hotel 4', 'Hotel 5'],
+            "y"     : [130, 160, 190, 145, 200],
+            
+        },
+        {
+            "title" : "Hotel price.",
+            "Text"  : "Hotel price for all of the search engines",
+            "x"     : ['Booking.com', 'Agoda.com', 'AirBnB', 'Trip.com', 'Expedia'],
+            "h1"     : [130, 140, 135, 156, 200],
+            "h2"     : [146, 158, 149, 200, 210],
+            "h3"     : [110, 100, 156, 170, 160],
+            "h4"     : [120, 125, 110, 160, 140],
+        },
     ]})
 
     
@@ -89,18 +104,54 @@ def create_Analysis_perimeterbased(request, *args, **kwargs):
     data.update({
         'plotdata' : [
         {
-            "title" : "Average Price",
-            "Text"  : "The average price for a perimeter of the hotel.",
-            "x"     : [3,4,5,6,4,5,8,7],
-            "y"     : [4,5,8,7,6,8,4,9],
+            "title" : "Average Price for every search engine.",
+            "Text"  : "The average price for the given hotels, in each search engine.",
+            "x"     : [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6],
+            "se1"     : [128, 130, 120, 150, 140, 130, 120, 120, 125, 160, 180, 200],
+            "se2"     : [140, 145, 147, 150, 130, 120, 100, 140, 137, 135, 150, 210],
+            "se3"     : [150, 147, 100, 105, 110, 115, 150, 130, 180, 190, 140, 100],
         },
         {
-            "title" : "Price per day",
-            "Text"  : "Price per day for a perimeter of the hotel",
-            "x"     : [5,5,6,9,456,8451,5498,351],
-            "y"     : [354,68,2318,384,684,446,648,684],
-
-        }
+            "title" : "Maximum and Minimum price.",
+            "Text"  : "Maximum and Minimum price of every search engine.",
+            "x"     : ['Booking.com', 'Agoda.com', 'AirBnB', 'Trip.com', 'Expedia'],
+            "y1"     : [162, 160, 140, 200, 260],
+            "y2"     : [110, 100, 100, 100, 150],
+        },
+        {
+            "title" : "Prices for Booking.com",
+            "Text"  : "Prices for the given perimeter in Booking.com",
+            "x"     : [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6],
+            "hotels"     : [{'hotel' : 'Hotel 1', 'dist' : 1.2, 'price' : 156},
+                            {'hotel' : 'Hotel 2', 'dist' : 3, 'price' : 170},
+                            {'hotel' : 'Hotel 3', 'dist' : 3.8, 'price' : 174},
+                            {'hotel' : 'Hotel 4', 'dist' : 5.2, 'price' : 178}],
+        },
+        {
+            "title" : "Prices for Agoda.com",
+            "Text"  : "Prices for the given perimeter in Booking.com",
+            "x"     : [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6],
+            "hotels"     : [{'hotel' : 'Hotel 1', 'dist' : 1.2, 'price' : 156},
+                            {'hotel' : 'Hotel 2', 'dist' : 3, 'price' : 170},
+                            {'hotel' : 'Hotel 3', 'dist' : 3.8, 'price' : 174},
+                            {'hotel' : 'Hotel 4', 'dist' : 5.2, 'price' : 178}],
+        },
+        {
+            "title" : "Prices for Expedia.com",
+            "Text"  : "Prices for the given perimeter in Booking.com",
+            "x"     : [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6],
+            "hotels"     : [{'hotel' : 'Hotel 1', 'dist' : 1.2, 'price' : 156},
+                            {'hotel' : 'Hotel 2', 'dist' : 3, 'price' : 170},
+                            {'hotel' : 'Hotel 3', 'dist' : 3.8, 'price' : 174},
+                            {'hotel' : 'Hotel 4', 'dist' : 5.2, 'price' : 178}],
+        },
+        {
+            "title" : "Average Price.",
+            "Text"  : "The average price for the given hotels, based on the distance.",
+            "x"     : [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6],
+            "y"     : [128, 130, 120, 150, 140, 130, 120, 120, 125, 160, 180, 200],
+            
+        },
     ]})
     
     qs = Profile.objects.get(user=request.user)

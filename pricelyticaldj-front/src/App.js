@@ -11,6 +11,7 @@ import SignUp from './views/SignUp'
 import Pricing from './views/Pricing'
 import Analysis_list from './views/Analysis_list'
 import Contact from './views/Contact'
+import Analysis from './views/Analysis'
 import Create from './views/Create_analysis'
 import {SERVER_ADDRESS} from "./constants/config"
 import {
@@ -107,7 +108,7 @@ function App() {
           <Route path="/analysis/create" render={() => logedin ? (<Create/>) : (<Redirect to='/login'/>)}/>
           <Route path="/profile" render={() => logedin ? (<Profile user={user} />) : (<Redirect to='/login'/>)}/>
           {/* <Route path="/analysis/create" render={() => logedin ? (<Create/>) : (<Create/>)}/> */}
-          <Route path="/analysis/report/:id"> analysis report</Route>
+          <Route path="/analysis/report/:id"> <Analysis/></Route>
           
           
           

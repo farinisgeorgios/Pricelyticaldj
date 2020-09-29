@@ -1,9 +1,55 @@
-import React from 'react';
-import {Button,Card, Container, Jumbotron, Row, Col, Text} from 'react-bootstrap'
-
+import React ,{useState} from 'react';
+import {Button,Card, Container, Jumbotron, Row, Col, Alert, Text} from 'react-bootstrap'
+import axios from 'axios'
+import {SERVER_ADDRESS} from "../constants/config"
+import { Redirect } from "react-router-dom";
 
 
 export default function Pricing(){
+    const [redirect, setRedirect] = useState({  redirect: false,
+        path: "",
+        msg: ""
+    });
+
+    function HandleBuy(hotelSearches,perimeterSearches) {
+        const data = {
+            hotelBased_searches : hotelSearches,
+            perimeterBased_searches : perimeterSearches,
+        }
+        const options = {
+            headers:{
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }    
+        }
+
+        axios.post(SERVER_ADDRESS + 'profile/set/searches/', data, options).then(response => {
+                
+            setRedirect({
+                redirect: true,
+                path : "/analysis/create",
+                msg : "Account Created"
+            })
+        }).catch((error) =>{
+            setRedirect({
+                redirect: false,
+                path : "",
+                msg : "Could not complete the purchase!"
+            })
+            console.log("Have an error completing the purchase.");
+                
+        });
+    }
+
+
+    if (redirect.redirect) {
+        return (
+        <Redirect
+            to= {redirect.path}
+        />
+        );
+    }else{
     return(
         // TODO buttons redirect and api call to insert analysis searches
         <div style={{background:'#F0F6FF'}}>
@@ -16,10 +62,15 @@ export default function Pricing(){
                         <h3 style={{color:'#F9F6F4'}}>Easy purchase Hotel-Based or Perimeter-Based Searches.</h3>
                     </Row>
                     <Row className='justify-content-center pt-xl-5'>
+                        <a href='/signup'>
                         <Button className= "btn-info btn-outline-light rounded-0 btn-lg">START FOR FREE</Button>
+                        </a>
                     </Row>
                 </Container>
             </Jumbotron>
+            <Row className='justify-content-center align-items-center' >
+            {redirect.msg && redirect.redirect===false && <Alert variant='danger' >{redirect.msg}</Alert>}
+            </Row>
             <Row className='justify-content-center align-items-center' >
                 <Col className="col-3 justify-content-center pt-xl-5 pb-xl-5" >
                     <Card className="rounded-0 shadow-sm">
@@ -42,7 +93,7 @@ export default function Pricing(){
                                 <span style={{"font-size":"0.7em"}}>Purchased analyses has an expiration date of one year. </span>
                             </Row>
                             <Row className='justify-content-center pt-xl-4'>
-                                <Button className="rounded-0 btn-light btn-outline-info" variant="primary">BUY NOW</Button>
+                                <Button onClick={()=>HandleBuy(50,0)} className="rounded-0 btn-light btn-outline-info" variant="primary">BUY NOW</Button>
                             </Row>                    
                         </Card.Body>
                     </Card>
@@ -78,7 +129,7 @@ export default function Pricing(){
                                 <span style={{"font-size":"0.7em"}}>Purchased analyses has an expiration date of two years. </span>
                             </Row>
                             <Row className='justify-content-center pt-xl-5'>
-                                <Button className="rounded-0 btn-light btn-outline-info" variant="primary">BUY NOW</Button>
+                                <Button onClick={()=>HandleBuy(50,50)} className="rounded-0 btn-light btn-outline-info" variant="primary">BUY NOW</Button>
                             </Row>
                         </Card.Body>
                     </Card>
@@ -114,7 +165,7 @@ export default function Pricing(){
                             <span style={{"font-size":"0.7em"}}>Purchased analyses has an expiration date of one year. </span>
                             </Row>
                             <Row className='justify-content-center pt-xl-4'>
-                                <Button className="rounded-0 btn-light btn-outline-info" variant="primary">BUY NOW</Button>
+                                <Button onClick={()=>HandleBuy(0,50)} className="rounded-0 btn-light btn-outline-info"  variant="primary">BUY NOW</Button>
                             </Row>
                         </Card.Body>
                     </Card>
@@ -133,4 +184,4 @@ export default function Pricing(){
             
         </div>
     )
-    }
+    }}
